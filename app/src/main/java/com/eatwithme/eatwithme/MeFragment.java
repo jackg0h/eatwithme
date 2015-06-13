@@ -2,16 +2,23 @@ package com.eatwithme.eatwithme;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -29,6 +36,8 @@ public class MeFragment extends android.support.v4.app.Fragment {
     ArrayList<RowItem> todoItems;
     TextView userNameView;
     Button fbLoginButton;
+    EditText intrestText;
+    Button saveButton;
 
     private ProfilePictureView userProfilePictureView;
 
@@ -68,6 +77,58 @@ public class MeFragment extends android.support.v4.app.Fragment {
         userProfilePictureView = (ProfilePictureView) v.findViewById(R.id.profilePicture);
         userNameView = (TextView) v.findViewById(R.id.userName);
         fbLoginButton = (Button) v.findViewById(R.id.fb_login_button);
+        saveButton = (Button) v.findViewById(R.id.saveBtn);
+        intrestText = (EditText) v.findViewById(R.id.intrest_text);
+
+        //init intrest
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String currentUserID = currentUser.getObjectId().toString();
+
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
+        query1.whereEqualTo("objectId", currentUserID);
+        query1.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (object == null) {
+                    Log.d("score", "The getFirst request failed.");
+                } else {
+                   intrestText.setText(object.getString("interest"));
+                }
+            }
+        });
+
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                //
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String currentUserID = currentUser.getObjectId().toString();
+
+               /* ParseObject intrests = new ParseObject("Intrest");
+                Log.d("Crash HERE", "Second PArt");
+                intrests.put("User", ParseUser.getCurrentUser().toString());
+                Log.d("Crash HERE", "3");
+                intrests.put("Intrests", intrestText.getText().toString());
+                Log.d("Crash HERE", "4");
+
+                intrests.saveInBackground();*/
+                //
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                query.getInBackground(currentUserID, new GetCallback<ParseObject>() {
+                    public void done(ParseObject gameScore, ParseException e) {
+                        if (e == null) {
+                            // Now let's update it with some new data. In this case, only cheatMode and score
+                            // will get sent to the Parse Cloud. playerName hasn't changed.
+                            gameScore.put("interest", intrestText.getText().toString());
+                            gameScore.saveInBackground();
+                        }
+                    }
+                });
+                Toast.makeText(getActivity(), "SAVED!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         fbLoginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -76,10 +137,11 @@ public class MeFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+
         if ((currentUser != null) && currentUser.isAuthenticated()) {
             makeMeRequest();
         }
+
 
         return v;
     }
@@ -200,6 +262,7 @@ public class MeFragment extends android.support.v4.app.Fragment {
             }
         }
     }
+
 
     private void logout() {
         // Log the user out
