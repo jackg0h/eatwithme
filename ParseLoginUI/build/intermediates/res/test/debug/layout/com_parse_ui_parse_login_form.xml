@@ -51,4 +51,4 @@
         android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
         android:text="@string/com_parse_ui_forgot_password_button_label" />
 </LinearLayout>
-<!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_form.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_form.xml -->
+<!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/res/layout/com_parse_ui_parse_login_form.xml --><!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_form.xml -->
