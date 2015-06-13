@@ -69,7 +69,9 @@ public class InviteFragment extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
                 intent.putExtra("venue_id",rowItem.mVenueID);
                 intent.putExtra("latitude", rowItem.mLatitude);
-                intent.putExtra("longtitude", rowItem.mLongitude);
+                intent.putExtra("longitude", rowItem.mLongitude);
+                intent.putExtra("venue_name", rowItem.mVenue);
+                intent.putExtra("venue_address", rowItem.mAddress);
                 startActivity(intent);
             }
         });

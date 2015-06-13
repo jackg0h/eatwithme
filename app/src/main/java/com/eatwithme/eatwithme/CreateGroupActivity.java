@@ -1,8 +1,8 @@
 package com.eatwithme.eatwithme;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,15 +12,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -78,6 +73,11 @@ public class CreateGroupActivity extends ActionBarActivity {
             ArrayList<String> groupMembers = new ArrayList<String>();
             Intent intent = this.getIntent();
             String theVenue = intent.getStringExtra("venue_id");
+            String venueName = intent.getStringExtra("venue_name");
+            String venueAddress = intent.getStringExtra("venue_address");
+            Double  latitude = Double.valueOf(intent.getStringExtra("latitude"));
+            Double  longitude = Double.valueOf(intent.getStringExtra("longitude"));
+
 
             Log.d("Crash HERE", "First PArt");
 
@@ -86,14 +86,20 @@ public class CreateGroupActivity extends ActionBarActivity {
 
             Log.d("Crash HERE", "Second PArt");
 
+            Log.d("DEBUG", "LATITUDE IS " + latitude + " AND LONGITUDE IS " + longitude);
+
             ParseObject foodGroup = new ParseObject("FoodGroup");
-            foodGroup.put("GroupLocation", new ParseGeoPoint(3.0666075,101.6116721));
+            foodGroup.put("GroupLocation", new ParseGeoPoint(latitude,longitude));
             foodGroup.put("GroupAdmin", ParseUser.getCurrentUser().toString());
             foodGroup.put("GroupMaxParty", groupMaxParty);
             foodGroup.put("GroupName", groupNameString);
             foodGroup.put("GroupMembers", groupMembers);
             foodGroup.put("GroupVenueID", theVenue);
+            foodGroup.put("GroupVenueName", venueName);
+            foodGroup.put("GroupVenueAddress", venueAddress);
+
             foodGroup.saveInBackground();
+            finish();
 
 
 //            ParseObject foodGroup = new ParseObject("test");

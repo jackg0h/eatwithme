@@ -1,37 +1,20 @@
 package com.eatwithme.eatwithme;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.eatwithme.eatwithme.Foursquare;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +37,8 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     private String JoingFragmentLog = "";
 
     private OnFragmentInteractionListener mListener;
+    private ListView mListView;
+    private VenueAdapter mAdapter;
 
     /**
      * Use this factory method to create a new instance of
@@ -90,10 +75,41 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_join, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_join, container, false);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FoodGroup");
+        mListView = (ListView) rootView.findViewById(R.id.join_listview);
+        Log.d("ONCREATEVIEW", "ONCREATEVIEW CALLED");
+        mAdapter = new VenueAdapter(getActivity(),
+                R.layout.list_item, MySingleton.getInstance(getActivity()).getmJoinRowArrayList());
+        mListView.setAdapter(mAdapter);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + scoreList.size() + " scores");
+
+                    if(scoreList.size()>=1){
+                        for(int i = 0 ; i < scoreList.size(); i++) {
+                            String party_max = (String) scoreList.get(i).get("GroupMaxParty");
+//                            Array group_members = (Array) scoreList.get(i).get("GroupMembers");
+                            String group_name = (String) scoreList.get(i).get("GroupName");
+                            String venue_id = (String) scoreList.get(i).get("GroupVenueID");
+                            String venue_name = (String ) scoreList.get(i).get("GroupVenueName");
+                            String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name,true));
+                            Foursquare.fillInImageLinks(getActivity());
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+        return rootView;
 
 
     }
