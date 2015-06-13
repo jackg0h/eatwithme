@@ -78,8 +78,8 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-       /* currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
+       currentUser = ParseUser.getCurrentUser();
+       /* if (currentUser != null) {
             setContentView(R.layout.activity_home);
         } else {
             showProfileLoggedOut();
@@ -114,4 +114,7 @@ public class MainActivity extends Activity {
         nameTextView.setText("");
         loginOrLogoutButton.setText(R.string.profile_login_button_label);
     }
+
+    
+
 }
