@@ -22,6 +22,7 @@
 package com.eatwithme.eatwithme;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,11 +80,15 @@ public class MainActivity extends Activity {
         super.onStart();
 
        currentUser = ParseUser.getCurrentUser();
-       /* if (currentUser != null) {
-            setContentView(R.layout.activity_home);
+        if (currentUser != null) {
+            //setContentView(R.layout.activity_home);
+            Intent intent = new Intent(this, UpdateProfileActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } else {
             showProfileLoggedOut();
-        }*/
+        }
 
         if(currentUser == null){
             ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
@@ -114,7 +119,5 @@ public class MainActivity extends Activity {
         nameTextView.setText("");
         loginOrLogoutButton.setText(R.string.profile_login_button_label);
     }
-
-    
 
 }
