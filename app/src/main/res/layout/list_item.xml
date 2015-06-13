@@ -18,7 +18,6 @@
         android:layout_height="211dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/group_placeholder"
         android:src="@drawable/gradient"
         android:id="@+id/icon"/>
     </RelativeLayout>

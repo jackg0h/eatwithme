@@ -37,23 +37,11 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     private String JoingFragmentLog = "";
 
     private OnFragmentInteractionListener mListener;
-    private ListView mListView;
     private VenueAdapter mAdapter;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment JoinFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static JoinFragment newInstance(String param1, String param2) {
+    public static JoinFragment newInstance() {
         JoinFragment fragment = new JoinFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,12 +54,7 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        String foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
-        Log.d(JoingFragmentLog, foursquareVenue.toString());
     }
 
     @Override
@@ -80,8 +63,7 @@ public class JoinFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_join, container, false);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("FoodGroup");
-        mListView = (ListView) rootView.findViewById(R.id.join_listview);
-        Log.d("ONCREATEVIEW", "ONCREATEVIEW CALLED");
+        ListView mListView = (ListView) rootView.findViewById(R.id.join_listview);
         mAdapter = new VenueAdapter(getActivity(),
                 R.layout.list_item, MySingleton.getInstance(getActivity()).getmJoinRowArrayList());
         mListView.setAdapter(mAdapter);
@@ -98,8 +80,7 @@ public class JoinFragment extends android.support.v4.app.Fragment {
                             String venue_id = (String) scoreList.get(i).get("GroupVenueID");
                             String venue_name = (String ) scoreList.get(i).get("GroupVenueName");
                             String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
-                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name,true));
-                            Foursquare.fillInImageLinks(getActivity());
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name, true));
                         }
                         mAdapter.notifyDataSetChanged();
                     }
