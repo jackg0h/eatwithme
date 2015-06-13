@@ -28,6 +28,8 @@ public final class Foursquare extends Activity{
 
     public static String searchFoursquareVenue(double latitude, double longitude, String query, Context context)
     {
+
+        
         // Instantiate the RequestQueue.
         String queryUrl = query;
         RequestQueue queue = Volley.newRequestQueue(context);
