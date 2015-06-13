@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -92,10 +92,16 @@ public class MainActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-                if (position == 0)
+            switch (position) {
+                case 0:
                     return JoinFragment.newInstance("Join Fragment", "First Fragment");
+                case 1:
+                    return InviteFragment.newInstance();
+                default:
+                    return PlaceholderFragment.newInstance(position + 1);
+            }
 
-            return PlaceholderFragment.newInstance(position + 1);
+
         }
 
         @Override

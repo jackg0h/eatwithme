@@ -2,7 +2,6 @@ package com.eatwithme.eatwithme;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -12,7 +11,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by ezekielchow on 6/13/15.
@@ -24,12 +27,12 @@ public final class Foursquare extends Activity{
     private static String basicUrl = "https://api.foursquare.com/v2/";
     private static double searchRadius = 5000;
 
+
     private Foursquare(){}
 
-    public static String searchFoursquareVenue(double latitude, double longitude, String query, Context context)
+    public static String searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
     {
 
-        
         // Instantiate the RequestQueue.
         String queryUrl = query;
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -45,6 +48,26 @@ public final class Foursquare extends Activity{
                         // Display the first 500 characters of the response string.
                         dataToReturn = response;
                         Log.d(FoursquareLog, response);
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            JSONObject jResponse = jobj.getJSONObject("response");
+                            JSONArray jVenueArray = jResponse.getJSONArray("venues");
+                            for(int i = 0; i < jVenueArray.length(); i++) {
+                                JSONObject jVenue = jVenueArray.getJSONObject(i);
+                                String venue_name = jVenue.getString("name");
+                                String venue_id = jVenue.getString("id");
+                                String formatted_address = jVenue.getJSONObject("location").getString("formattedAddress");
+                                JSONArray jCategories = jVenue.getJSONArray("categories");
+                                MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
+                                Log.d("VENUE IS",venue_name);
+                                Log.d("VENUE ID IS ", venue_id);
+                                Log.d("ADDRESS IS", formatted_address);
+                            }
+                            Log.d("DONE", "DONE!");
+                            EventBus.getDefault().post(MySingleton.getInstance(context).getmArrayList());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
                     }
