@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -68,6 +70,26 @@ public class MeFragment extends android.support.v4.app.Fragment {
         userProfilePictureView = (ProfilePictureView) v.findViewById(R.id.profilePicture);
         userNameView = (TextView) v.findViewById(R.id.userName);
         fbLoginButton = (Button) v.findViewById(R.id.fb_login_button);
+        Button saveButton = (Button) v.findViewById(R.id.saveBtn);
+        final EditText intrestText = (EditText) v.findViewById(R.id.intrest_text);
+
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                //
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String currentUserID = currentUser.getObjectId();
+
+                ParseObject foodGroup = new ParseObject("Intrest");
+                foodGroup.put("User", ParseUser.getCurrentUser().toString());
+                foodGroup.put("Intrest", intrestText);
+
+                foodGroup.saveInBackground();
+                //
+            }
+        });
 
         fbLoginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -76,10 +98,13 @@ public class MeFragment extends android.support.v4.app.Fragment {
             }
         });
 
+
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && currentUser.isAuthenticated()) {
             makeMeRequest();
         }
+
 
         return v;
     }
@@ -200,6 +225,7 @@ public class MeFragment extends android.support.v4.app.Fragment {
             }
         }
     }
+
 
     private void logout() {
         // Log the user out
