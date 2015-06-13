@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
-
 /**
  * Created by ezekielchow on 6/13/15.
  */
