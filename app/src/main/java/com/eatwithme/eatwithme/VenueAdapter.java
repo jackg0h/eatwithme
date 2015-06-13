@@ -36,7 +36,6 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         RowItem rowItem = getItem(position);
-        rowItem.mContext = context;
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -50,11 +49,6 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        if (rowItem.getImage() != null)
-        {
-            holder.imageView.setImageBitmap(rowItem.getImage());
-        }else{}
 
         holder.txtTitle.setText(rowItem.mVenue);
         holder.txtAddress.setText(rowItem.mAddress);

@@ -9,17 +9,18 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="My Groups"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:id="@+id/venue_listview"
-        android:layout_height="wrap_content">
-    </ListView>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/group_create_button"
         android:text="CREATE GROUP" />
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/venue_listview"
+        android:layout_height="wrap_content">
+    </ListView>
+
 
 
 </LinearLayout>

@@ -21,12 +21,17 @@
 
 package com.eatwithme.eatwithme;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,6 +39,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
+import java.io.File;
 import java.util.Locale;
 
 
@@ -44,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
-
+    private FloatingActionButton floatingActionButton;
+    private Context context;
 
     SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -59,11 +66,50 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        titleTextView = (TextView) findViewById(R.id.profile_title);
-        emailTextView = (TextView) findViewById(R.id.profile_email);
-        nameTextView = (TextView) findViewById(R.id.profile_name);
-        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
+        currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            setContentView(R.layout.activity_main);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+
+            // Bind the tabs to the ViewPager
+            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            tabs.setViewPager(mViewPager);
+
+
+            floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("BUTTON CLICKED", "BUTTON CLICKED");
+                    if(mViewPager.getCurrentItem() == 1) {
+                        Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
+        } else {
+            showProfileLoggedOut();
+        }
+
+        if(currentUser == null){
+            ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
+                    MainActivity.this);
+            startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+        }
+
+
+//        setContentView(R.layout.activity_main);
+//        titleTextView = (TextView) findViewById(R.id.profile_titl//e);
+//        emailTextView = (TextView) findViewById(R.id.profile_emai//l);
+//        nameTextView = (TextView) findViewById(R.id.profile_nam//e);
+//        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
 
 
 //        titleTextView.setText(R.string.profile_title_logged_in);
@@ -90,27 +136,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-       currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            setContentView(R.layout.activity_main);
-            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-            // Set up the ViewPager with the sections adapter.
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-
-            // Bind the tabs to the ViewPager
-            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-            tabs.setViewPager(mViewPager);
-        } else {
-            showProfileLoggedOut();
-        }
-
-        if(currentUser == null){
-            ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
-                    MainActivity.this);
-            startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
-        }
     }
 
     /**

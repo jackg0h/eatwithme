@@ -2,14 +2,12 @@ package com.eatwithme.eatwithme;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -47,8 +45,6 @@ public final class Foursquare extends Activity{
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        dataToReturn = response;
-                        Log.d(FoursquareLog, response);
                         try {
                             JSONObject jobj = new JSONObject(response);
                             JSONObject jResponse = jobj.getJSONObject("response");
@@ -59,13 +55,9 @@ public final class Foursquare extends Activity{
                                 String venue_id = jVenue.getString("id");
                                 String formatted_address = jVenue.getJSONObject("location").getString("formattedAddress");
                                 JSONArray jCategories = jVenue.getJSONArray("categories");
-                                MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id, context));
-                                Log.d("VENUE IS",venue_name);
-                                Log.d("VENUE ID IS ", venue_id);
-                                Log.d("ADDRESS IS", formatted_address);
+                                MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
                             }
-                            Log.d("DONE", "DONE!");
-                            EventBus.getDefault().post(MySingleton.getInstance(context).getmArrayList());
+                            EventBus.getDefault().postSticky(MySingleton.getInstance(context).getmArrayList());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,4 +75,5 @@ public final class Foursquare extends Activity{
 
         return dataToReturn;
     }
+
 }

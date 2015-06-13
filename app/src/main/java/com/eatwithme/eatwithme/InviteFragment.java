@@ -3,6 +3,7 @@ package com.eatwithme.eatwithme;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class InviteFragment extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private int ArrayListSize = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,7 +82,8 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         });
         mListView = (ListView) rootView.findViewById(R.id.venue_listview);
         todoItems = new ArrayList<RowItem>();
-        RowItem rowItem = new RowItem("TESTING", "asdadasda","sadadsadasd", context);
+         
+        RowItem rowItem = new RowItem("TESTING", "asdadasda","sadadsadasd");
         todoItems.add(rowItem);
 
         mAdapter = new VenueAdapter(getActivity(),
@@ -106,12 +110,23 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         super.onStop();
     }
 
+    public void onEventMainThread(Bitmap bitmap) {
+
+    }
+
     public void onEventMainThread(ArrayList<RowItem> arrayList){
 
         Log.d("REEIVED", "RECEVEIDE EVENT MEIN THREAD " + arrayList.size());
+
+
+
         mAdapter = new VenueAdapter(getActivity(),
                 R.layout.list_item, MySingleton.getInstance(getActivity()).getmArrayList());
+
+
         mListView.setAdapter(mAdapter);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
