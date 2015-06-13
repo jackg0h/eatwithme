@@ -1,155 +1,129 @@
+/*
+ *  Copyright (c) 2014, Parse, LLC. All rights reserved.
+ *
+ *  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+ *  copy, modify, and distribute this software in source code or binary form for use
+ *  in connection with the web services and APIs provided by Parse.
+ *
+ *  As with any software that integrates with the Parse platform, your use of
+ *  this software is subject to the Parse Terms of Service
+ *  [https://www.parse.com/about/terms]. This copyright notice shall be
+ *  included in all copies or substantial portions of the software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ *  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ *  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ *  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ *  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+
 package com.eatwithme.eatwithme;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
+import com.parse.ParseUser;
+import com.parse.ui.ParseLoginBuilder;
 
-import java.util.Locale;
+/**
+ * Shows the user profile. This simple activity can function regardless of whether the user
+ * is currently logged in.
+ */
+public class MainActivity extends Activity {
+    private static final int LOGIN_REQUEST = 0;
 
+    private TextView titleTextView;
+    private TextView emailTextView;
+    private TextView nameTextView;
+    private Button loginOrLogoutButton;
 
-public class MainActivity extends ActionBarActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
+    private ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        titleTextView = (TextView) findViewById(R.id.profile_title);
+        emailTextView = (TextView) findViewById(R.id.profile_email);
+        nameTextView = (TextView) findViewById(R.id.profile_name);
+        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
+        titleTextView.setText(R.string.profile_title_logged_in);
 
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // Bind the tabs to the ViewPager
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setViewPager(mViewPager);
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-                if (position == 0)
-                    return JoinFragment.newInstance("Join Fragment", "First Fragment");
-
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+        loginOrLogoutButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentUser != null) {
+                    // User clicked to log out.
+                    ParseUser.logOut();
+                    currentUser = null;
+                    showProfileLoggedOut();
+                } else {
+                    // User clicked to log in.
+                    ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
+                            MainActivity.this);
+                    startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+                }
             }
-            return null;
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            setContentView(R.layout.splash);
+
+            Thread timerThread = new Thread(){
+                public void run(){
+                    try{
+                        sleep(3000);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }finally{
+                        Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(i);
+                    }
+                }
+            };
+            timerThread.start();
+        }
+
+         else {
+
+            showProfileLoggedOut();
         }
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * Shows the profile of the given user.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+    private void showProfileLoggedIn() {
+        titleTextView.setText(R.string.profile_title_logged_in);
+        emailTextView.setText(currentUser.getEmail());
+        String fullName = currentUser.getString("name");
+        if (fullName != null) {
+            nameTextView.setText(fullName);
         }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+        loginOrLogoutButton.setText(R.string.profile_logout_button_label);
     }
 
+    /**
+     * Show a message asking the user to log in, toggle login/logout button text.
+     */
+    private void showProfileLoggedOut() {
+        titleTextView.setText(R.string.profile_title_logged_out);
+        emailTextView.setText("");
+        nameTextView.setText("");
+        loginOrLogoutButton.setText(R.string.profile_login_button_label);
+    }
 }

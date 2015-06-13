@@ -1,28 +1,20 @@
 package com.eatwithme.eatwithme;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 
 public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Parse.enableLocalDatastore(this);
 
-        Parse.initialize(this, "wqfInYMke6uKqmISv7zyak0xYSav5JnvEDAiP66s", "hCYkAkLzxHOYUjllvBFggyU2pZur9RDvjZpENycp");
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
     }
 
     @Override
