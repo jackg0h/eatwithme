@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ParseLoginUI/ParseLoginUI.iml" filepath="$PROJECT_DIR$/ParseLoginUI/ParseLoginUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/eatwithme.iml" filepath="$PROJECT_DIR$/eatwithme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eatwithme-android.iml" filepath="$PROJECT_DIR$/eatwithme-android.iml" />
     </modules>
   </component>
 </project>

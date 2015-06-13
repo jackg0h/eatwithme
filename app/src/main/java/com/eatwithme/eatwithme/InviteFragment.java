@@ -94,6 +94,9 @@ public class InviteFragment extends android.support.v4.app.Fragment {
     public void onEventMainThread(ArrayList<RowItem> arrayList){
 
         Log.d("REEIVED", "RECEVEIDE EVENT MEIN THREAD " + arrayList.size());
+
+
+
         mAdapter.notifyDataSetChanged();
     }
 

@@ -30,6 +30,7 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
         ImageView imageView;
         TextView txtAddress;
         TextView txtTitle;
+
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -45,8 +46,9 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
             holder.txtTitle = (TextView) convertView.findViewById(R.id.venue);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
-        } else
+        } else {
             holder = (ViewHolder) convertView.getTag();
+        }
 
         holder.txtTitle.setText(rowItem.mVenue);
         holder.txtAddress.setText(rowItem.mAddress);
