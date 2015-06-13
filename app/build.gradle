@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':ParseLoginUI')
     compile 'com.facebook.android:facebook-android-sdk:4.2.0'
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+    compile 'com.mcxiaoke.volley:library:1.0.+'
 }
