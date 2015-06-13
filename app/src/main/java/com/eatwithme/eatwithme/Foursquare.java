@@ -54,8 +54,17 @@ public final class Foursquare extends Activity{
                                 JSONObject jVenue = jVenueArray.getJSONObject(i);
                                 String venue_name = jVenue.getString("name");
                                 String venue_id = jVenue.getString("id");
-                                String formatted_address = jVenue.getJSONObject("location").getString("formattedAddress");
+                                String formatted_address = "";
+                                JSONArray formatted_address_array = jVenue.getJSONObject("location").getJSONArray("formattedAddress");
+                                for(int j = 0; j < formatted_address_array.length(); j++) {
+                                    if(j > 0) {
+                                        formatted_address = formatted_address + ", " + formatted_address_array.getString(j);
+                                    }else
+                                        formatted_address = formatted_address + formatted_address_array.getString(j);
+                                }
                                 JSONArray jCategories = jVenue.getJSONArray("categories");
+                                for(int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++)
+                                    EventBus.getDefault().post();
                                 MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
                             }
                             EventBus.getDefault().postSticky(MySingleton.getInstance(context).getmArrayList());
