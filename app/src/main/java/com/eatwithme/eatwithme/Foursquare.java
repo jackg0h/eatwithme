@@ -92,8 +92,15 @@ public final class Foursquare extends Activity{
 
         return dataToReturn;
     }
-    public static void fillInImageLinks(final Context context) {
+
+
+    public static void fillInImageLinks(final Context context)  {
         for (int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++) {
+            new Thread(new Runnable() {
+                public void run() {
+
+                }
+            }).start();
             String venue_id = MySingleton.getInstance(context).getmArrayList().get(i).mVenueID;
             String url = "https://api.foursquare.com/v2/venues/" + venue_id + "?" + "oauth_token=" + "2J1RKF3B5YTS1D1TLGZZWUN4HJ1L2IPGOUVIE440MQXN5YSI" + "&v=20150614";
             final int finalI = i;
