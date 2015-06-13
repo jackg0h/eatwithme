@@ -1,6 +1,7 @@
 package com.eatwithme.eatwithme;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -34,6 +35,7 @@ public class InviteFragment extends android.support.v4.app.Fragment {
     VenueAdapter mAdapter;
     ArrayList<RowItem> todoItems;
     ListView mListView;
+    Context context;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,7 +70,6 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_invite, container, false);
         Button createGroupButton = (Button) rootView.findViewById(R.id.group_create_button);
-        Button addArrayButton = (Button) rootView.findViewById(R.id.array_add_button);
         createGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,24 +79,17 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         });
         mListView = (ListView) rootView.findViewById(R.id.venue_listview);
         todoItems = new ArrayList<RowItem>();
-        todoItems.add(new RowItem("TESTING", "asdadasda","sadadsadasd"));
-
+        RowItem rowItem = new RowItem("TESTING", "asdadasda","sadadsadasd", context);
+        todoItems.add(rowItem);
 
         mAdapter = new VenueAdapter(getActivity(),
                 R.layout.list_item, todoItems);
         mListView.setAdapter(mAdapter);
-        addArrayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                todoItems.add(new RowItem("TESTING", "asdsada","asdadas"));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                mAdapter.notifyDataSetChanged();
 
-            }
-        });
+//        for (int i=0;i< todoItems.size(); i++)
+//        {
+//            rowItem.loadImage(mAdapter);
+//        }
 
         return rootView;
     }
