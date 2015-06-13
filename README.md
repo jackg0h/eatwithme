@@ -1,2 +1,0 @@
-# eatwithme
-Never Eat Alone
