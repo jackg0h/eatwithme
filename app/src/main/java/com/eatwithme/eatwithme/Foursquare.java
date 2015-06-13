@@ -45,8 +45,6 @@ public final class Foursquare extends Activity{
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        dataToReturn = response;
-                        Log.d(FoursquareLog, response);
                         try {
                             JSONObject jobj = new JSONObject(response);
                             JSONObject jResponse = jobj.getJSONObject("response");
@@ -58,12 +56,8 @@ public final class Foursquare extends Activity{
                                 String formatted_address = jVenue.getJSONObject("location").getString("formattedAddress");
                                 JSONArray jCategories = jVenue.getJSONArray("categories");
                                 MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
-                                Log.d("VENUE IS",venue_name);
-                                Log.d("VENUE ID IS ", venue_id);
-                                Log.d("ADDRESS IS", formatted_address);
                             }
-                            Log.d("DONE", "DONE!");
-                            EventBus.getDefault().post(MySingleton.getInstance(context).getmArrayList());
+                            EventBus.getDefault().postSticky(MySingleton.getInstance(context).getmArrayList());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

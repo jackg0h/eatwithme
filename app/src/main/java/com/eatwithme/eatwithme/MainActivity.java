@@ -21,12 +21,15 @@
 
 package com.eatwithme.eatwithme;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
+    private FloatingActionButton floatingActionButton;
 
 
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -59,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        titleTextView = (TextView) findViewById(R.id.profile_title);
-        emailTextView = (TextView) findViewById(R.id.profile_email);
-        nameTextView = (TextView) findViewById(R.id.profile_name);
-        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
+
+//        setContentView(R.layout.activity_main);
+//        titleTextView = (TextView) findViewById(R.id.profile_titl//e);
+//        emailTextView = (TextView) findViewById(R.id.profile_emai//l);
+//        nameTextView = (TextView) findViewById(R.id.profile_nam//e);
+//        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
 
 
 //        titleTextView.setText(R.string.profile_title_logged_in);
@@ -102,6 +107,21 @@ public class MainActivity extends AppCompatActivity {
             // Bind the tabs to the ViewPager
             PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
             tabs.setViewPager(mViewPager);
+
+
+            floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mViewPager.getCurrentItem() == 1) {
+                        Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
         } else {
             showProfileLoggedOut();
         }

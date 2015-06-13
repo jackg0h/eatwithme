@@ -2,7 +2,6 @@ package com.eatwithme.eatwithme;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,7 +67,7 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_invite, container, false);
         Button createGroupButton = (Button) rootView.findViewById(R.id.group_create_button);
-        Button addArrayButton = (Button) rootView.findViewById(R.id.array_add_button);
+//        Button addArrayButton = (Button) rootView.findViewById(R.id.array_add_button);
         createGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,25 +76,23 @@ public class InviteFragment extends android.support.v4.app.Fragment {
             }
         });
         mListView = (ListView) rootView.findViewById(R.id.venue_listview);
-        todoItems = new ArrayList<RowItem>();
-        todoItems.add(new RowItem("TESTING", "asdadasda","sadadsadasd"));
-
+        Log.d("ONCREATEVIEW", "ONCREATEVIEW CALLED");
 
         mAdapter = new VenueAdapter(getActivity(),
-                R.layout.list_item, todoItems);
+                R.layout.list_item, MySingleton.getInstance(getActivity()).getmArrayList());
         mListView.setAdapter(mAdapter);
-        addArrayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                todoItems.add(new RowItem("TESTING", "asdsada","asdadas"));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
-                mAdapter.notifyDataSetChanged();
-
-            }
-        });
+//        addArrayButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                todoItems.add(new RowItem("TESTING", "asdsada","asdadas"));
+//                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
+//                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
+//                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
+//                todoItems.add(new RowItem("TESTING", BitmapFactory.decodeResource(getResources(), R.drawable.group_placeholder)));
+//                mAdapter.notifyDataSetChanged();
+//
+//            }
+//        });
 
         return rootView;
     }
@@ -110,6 +107,11 @@ public class InviteFragment extends android.support.v4.app.Fragment {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ONRESUME", "ONRESUME");
     }
 
     public void onEventMainThread(ArrayList<RowItem> arrayList){

@@ -9,12 +9,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="My Groups"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/array_add_button"
-        android:text="ADD TO ARRAY" />
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/venue_listview"
