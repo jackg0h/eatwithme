@@ -50,7 +50,7 @@ public class InviteFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_invite, container, false);
@@ -68,6 +68,8 @@ public class InviteFragment extends android.support.v4.app.Fragment {
 
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
                 intent.putExtra("venue_id",rowItem.mVenueID);
+                intent.putExtra("latitude", rowItem.mLatitude);
+                intent.putExtra("longtitude", rowItem.mLongitude);
                 startActivity(intent);
             }
         });
