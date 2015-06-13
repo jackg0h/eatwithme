@@ -36,4 +36,13 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment, me</string>
     <string name="title_activity_create_group">CreateGroupActivity</string>
+
+    <string-array name="GroupNumber">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
 </resources>

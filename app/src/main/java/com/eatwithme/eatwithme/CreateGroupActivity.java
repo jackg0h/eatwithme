@@ -1,9 +1,27 @@
 package com.eatwithme.eatwithme;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 
 public class CreateGroupActivity extends ActionBarActivity {
@@ -12,6 +30,15 @@ public class CreateGroupActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        Spinner spinner = (Spinner)findViewById(R.id.foodGroupSpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.GroupNumber, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+     // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 
     @Override
@@ -35,4 +62,50 @@ public class CreateGroupActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void createGroup(View view)
+    {
+        EditText groupNameEditText = (EditText)findViewById(R.id.group_name_edit_text);
+        if (groupNameEditText.getText().toString().trim().length() == 0 )
+        {
+            Toast.makeText(CreateGroupActivity.this, "Please Fill in Group Name", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Spinner mySpinner=(Spinner) findViewById(R.id.foodGroupSpinner);
+            String groupMaxParty = mySpinner.getSelectedItem().toString();
+            String groupNameString = groupNameEditText.getText().toString();
+            ArrayList<String> groupMembers = new ArrayList<String>();
+            Intent intent = this.getIntent();
+            String theVenue = intent.getStringExtra("venue_id");
+
+            Log.d("Crash HERE", "First PArt");
+
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            String currentUserID = currentUser.getObjectId();
+
+            Log.d("Crash HERE", "Second PArt");
+
+            ParseObject foodGroup = new ParseObject("FoodGroup");
+            foodGroup.put("GroupLocation", new ParseGeoPoint(3.0666075,101.6116721));
+            foodGroup.put("GroupAdmin", ParseUser.getCurrentUser().toString());
+            foodGroup.put("GroupMaxParty", groupMaxParty);
+            foodGroup.put("GroupName", groupNameString);
+            foodGroup.put("GroupMembers", groupMembers);
+            foodGroup.put("GroupVenueID", theVenue);
+            foodGroup.saveInBackground();
+
+
+//            ParseObject foodGroup = new ParseObject("test");
+//            foodGroup.put("geo", new ParseGeoPoint(3.0666075,101.6116721));
+//            foodGroup.put("meme", "asdasdasdasd");
+//            foodGroup.put("theArray", groupMembers);
+//            foodGroup.saveInBackground();
+
+            Log.d("Crash HERE", "third PArt");
+
+        }
+    }
+
+
 }

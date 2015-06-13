@@ -5,4 +5,8 @@
     <item android:drawable="@color/com_parse_ui_facebook_login_button"/>
 
 </selector>
+<<<<<<< HEAD
 <!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/drawable/com_parse_ui_facebook_login_button_background_selector.xml -->
+=======
+<!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/res/drawable/com_parse_ui_facebook_login_button_background_selector.xml -->
+>>>>>>> d7ab91c3de7b6b7d64afd9b0877f26909d80b630
