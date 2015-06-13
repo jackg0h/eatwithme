@@ -20,10 +20,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
+    //compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.parse.bolts:bolts-android:1.+'
+    compile project(':ParseLoginUI')
+    compile 'com.facebook.android:facebook-android-sdk:4.2.0'
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+    compile 'com.android.support:design:22.2.0'
     compile 'com.mcxiaoke.volley:library:1.0.+'
-
 }

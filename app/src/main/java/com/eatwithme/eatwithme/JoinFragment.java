@@ -85,7 +85,7 @@ public class JoinFragment extends android.support.v4.app.Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        ArrayList<String> foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
+        String foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
         Log.d(JoingFragmentLog, foursquareVenue.toString());
     }
 

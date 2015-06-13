@@ -2,7 +2,6 @@ package com.eatwithme.eatwithme;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -13,27 +12,26 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
+import de.greenrobot.event.EventBus;
 /**
  * Created by ezekielchow on 6/13/15.
  */
-public final class Foursquare extends Activity {
+public final class Foursquare extends Activity{
 
-    private static ArrayList<String> dataToReturn = new ArrayList<String>();
+    private static String dataToReturn = "";
     private static String FoursquareLog = "";
     private static String basicUrl = "https://api.foursquare.com/v2/";
     private static double searchRadius = 5000;
 
-    private Foursquare() {
-    }
 
-    public static ArrayList<String> searchFoursquareVenue(double latitude, double longitude, String query, Context context)
+    private Foursquare(){}
+
+    public static String searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
     {
+
         // Instantiate the RequestQueue.
         String queryUrl = query;
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -47,25 +45,30 @@ public final class Foursquare extends Activity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        try{
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONObject reponseJson = jsonObject.getJSONObject("reponse");
-                            JSONArray arrayVenues = reponseJson.getJSONArray("venues");
-
-                            if (arrayVenues != null) {
-                                int len = arrayVenues.length();
-                                for (int i=0;i<len;i++){
-                                    dataToReturn.add(arrayVenues.get(i).toString());
-                                }
+                        dataToReturn = response;
+                        Log.d(FoursquareLog, response);
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            JSONObject jResponse = jobj.getJSONObject("response");
+                            JSONArray jVenueArray = jResponse.getJSONArray("venues");
+                            for(int i = 0; i < jVenueArray.length(); i++) {
+                                JSONObject jVenue = jVenueArray.getJSONObject(i);
+                                String venue_name = jVenue.getString("name");
+                                String venue_id = jVenue.getString("id");
+                                String formatted_address = jVenue.getJSONObject("location").getString("formattedAddress");
+                                JSONArray jCategories = jVenue.getJSONArray("categories");
+                                MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
+                                Log.d("VENUE IS",venue_name);
+                                Log.d("VENUE ID IS ", venue_id);
+                                Log.d("ADDRESS IS", formatted_address);
                             }
-
-                            Log.d(FoursquareLog, arrayVenues.toString());
-                            dataToReturn.add(arrayVenues);
-
-                        }catch (Exception e)
-                        {
+                            Log.d("DONE", "DONE!");
+                            EventBus.getDefault().post(MySingleton.getInstance(context).getmArrayList());
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -79,8 +82,4 @@ public final class Foursquare extends Activity {
         return dataToReturn;
     }
 
-    public static
-    {
-
-    }
 }
