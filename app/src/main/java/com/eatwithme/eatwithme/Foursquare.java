@@ -25,15 +25,13 @@ import de.greenrobot.event.EventBus;
  */
 public final class Foursquare extends Activity{
 
-    private static String dataToReturn = "";
-    private static String FoursquareLog = "";
     private static String basicUrl = "https://api.foursquare.com/v2/";
     private static double searchRadius = 5000;
 
 
     private Foursquare(){}
 
-    public static String searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
+    public static void searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
     {
 
         // Instantiate the RequestQueue.
@@ -84,13 +82,10 @@ public final class Foursquare extends Activity{
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(FoursquareLog, error.toString());
             }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
-
-        return dataToReturn;
     }
     public static void fillInImageLinks(final Context context) {
         for (int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++) {
@@ -130,7 +125,6 @@ public final class Foursquare extends Activity{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d(FoursquareLog, error.toString());
                 }
             });
             queue.add(stringRequest);

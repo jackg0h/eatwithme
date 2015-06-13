@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             groupSearchEditText = (EditText) findViewById(R.id.group_name_edit_text);
 
+            Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", this);
+
             // Bind the tabs to the ViewPager
             PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
             tabs.setViewPager(mViewPager);
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return JoinFragment.newInstance("Join Fragment", "First Fragment");
+                    return JoinFragment.newInstance();
                 case 1:
                     return InviteFragment.newInstance();
                 default:
