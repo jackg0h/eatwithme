@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-bn/values.xml -->
+=======
+    <!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-bn/values.xml -->
+>>>>>>> 3d08829397fe7d07654cebf96e078ebc70d9b114
     <eat-comment/>
     <string name="messenger_send_button_text">প্রেরণ করুন</string>
 </resources>

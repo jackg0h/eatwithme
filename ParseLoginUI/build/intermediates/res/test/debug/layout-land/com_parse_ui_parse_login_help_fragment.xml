@@ -11,4 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/res/layout-land/com_parse_ui_parse_login_help_fragment.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout-land/com_parse_ui_parse_login_help_fragment.xml -->
+=======
+<!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/res/layout-land/com_parse_ui_parse_login_help_fragment.xml --><!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/build/intermediates/bundles/debug/res/layout-land/com_parse_ui_parse_login_help_fragment.xml -->
+>>>>>>> 3d08829397fe7d07654cebf96e078ebc70d9b114
