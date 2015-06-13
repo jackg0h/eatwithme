@@ -85,13 +85,5 @@ public final class Foursquare extends Activity{
 
         return dataToReturn;
     }
-    public static void createGroupRequest(int number_of_people, String group_name, String venue_id) {
-        ParseUser user = ParseUser.getCurrentUser();
-        ParseObject createGroup = new ParseObject("Group");
-        createGroup.put("max_party", number_of_people);
-        createGroup.put("name", group_name);
-        createGroup.put("group_admin", user.getObjectId());
-        createGroup.saveInBackground();
-    }
 
 }

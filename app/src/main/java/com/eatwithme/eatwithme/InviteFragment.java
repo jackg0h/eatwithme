@@ -63,8 +63,11 @@ public class InviteFragment extends android.support.v4.app.Fragment {
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                RowItem rowItem = (RowItem) mListView.getItemAtPosition(position);
+
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                intent.putExtra("venue_id",rowItem.mVenueID);
                 startActivity(intent);
             }
         });
