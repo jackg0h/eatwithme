@@ -22,7 +22,6 @@
 package com.eatwithme.eatwithme;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,28 +78,17 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        currentUser = ParseUser.getCurrentUser();
+       /* currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            setContentView(R.layout.splash);
-
-            Thread timerThread = new Thread(){
-                public void run(){
-                    try{
-                        sleep(3000);
-                    }catch(InterruptedException e){
-                        e.printStackTrace();
-                    }finally{
-                        Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(i);
-                    }
-                }
-            };
-            timerThread.start();
-        }
-
-         else {
-
+            setContentView(R.layout.activity_home);
+        } else {
             showProfileLoggedOut();
+        }*/
+
+        if(currentUser == null){
+            ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
+                    MainActivity.this);
+            startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
         }
     }
 
