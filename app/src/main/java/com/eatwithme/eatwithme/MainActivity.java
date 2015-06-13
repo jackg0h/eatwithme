@@ -21,7 +21,7 @@
 
 package com.eatwithme.eatwithme;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -31,7 +31,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView nameTextView;
     private Button loginOrLogoutButton;
     private FloatingActionButton floatingActionButton;
+    private EditText groupSearchEditText;
 
 
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -73,10 +76,23 @@ public class MainActivity extends AppCompatActivity {
             // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
+            groupSearchEditText = (EditText) findViewById(R.id.group_name_edit_text);
 
             // Bind the tabs to the ViewPager
             PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
             tabs.setViewPager(mViewPager);
+
+//            groupSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                    if (actionId == EditorInfo.IME_NULL
+//                            && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+//                        Log.d("KEYDOWN", "KEYDOWN");
+//                        Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+//                    }
+//                    return true;
+//                }
+//            });
 
 
             floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -86,8 +102,18 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Log.d("BUTTON CLICKED", "BUTTON CLICKED");
                     if(mViewPager.getCurrentItem() == 1) {
-                        Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
-                        startActivity(intent);
+                        if(groupSearchEditText.getVisibility() == View.GONE) {
+                            groupSearchEditText.setVisibility(View.VISIBLE);
+                            groupSearchEditText.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(groupSearchEditText, InputMethodManager.SHOW_IMPLICIT);
+                        }
+                        else {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(groupSearchEditText.getWindowToken(), 0);
+                            Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+                            groupSearchEditText.setVisibility(View.GONE);
+                        }
                     }
                 }
             });

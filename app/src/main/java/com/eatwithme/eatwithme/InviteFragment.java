@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -54,21 +54,20 @@ public class InviteFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_invite, container, false);
-        Button createGroupButton = (Button) rootView.findViewById(R.id.group_create_button);
 //        Button addArrayButton = (Button) rootView.findViewById(R.id.array_add_button);
-        createGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
-                startActivity(intent);
-            }
-        });
         mListView = (ListView) rootView.findViewById(R.id.venue_listview);
         Log.d("ONCREATEVIEW", "ONCREATEVIEW CALLED");
 
         mAdapter = new VenueAdapter(getActivity(),
                 R.layout.list_item, MySingleton.getInstance(getActivity()).getmArrayList());
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
