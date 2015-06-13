@@ -25,12 +25,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
@@ -45,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView nameTextView;
     private Button loginOrLogoutButton;
 
+
+    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
+
     private ParseUser currentUser;
 
     @Override
@@ -56,36 +64,47 @@ public class MainActivity extends AppCompatActivity {
         emailTextView = (TextView) findViewById(R.id.profile_email);
         nameTextView = (TextView) findViewById(R.id.profile_name);
         loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
-        titleTextView.setText(R.string.profile_title_logged_in);
 
-        loginOrLogoutButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentUser != null) {
-                    // User clicked to log out.
-                    ParseUser.logOut();
-                    currentUser = null;
-                    showProfileLoggedOut();
-                } else {
-                    // User clicked to log in.
-                    ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
-                            MainActivity.this);
-                    startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
-                }
-            }
-        });
+
+//        titleTextView.setText(R.string.profile_title_logged_in);
+
+//        loginOrLogoutButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (currentUser != null) {
+//                    // User clicked to log out.
+//                    ParseUser.logOut();
+//                    currentUser = null;
+//                    showProfileLoggedOut();
+//                } else {
+//                    // User clicked to log in.
+//                    ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
+//                            MainActivity.this);
+//                    startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+//                }
+//            }
+//        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-       /* currentUser = ParseUser.getCurrentUser();
+       currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            setContentView(R.layout.activity_home);
+            setContentView(R.layout.activity_main);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+
+            // Bind the tabs to the ViewPager
+            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            tabs.setViewPager(mViewPager);
         } else {
             showProfileLoggedOut();
-        }*/
+        }
 
         if(currentUser == null){
             ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
@@ -145,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
      * Show a message asking the user to log in, toggle login/logout button text.
      */
     private void showProfileLoggedOut() {
-        titleTextView.setText(R.string.profile_title_logged_out);
-        emailTextView.setText("");
-        nameTextView.setText("");
-        loginOrLogoutButton.setText(R.string.profile_login_button_label);
+//        titleTextView.setText(R.string.profile_title_logged_out);
+//        emailTextView.setText("");
+//        nameTextView.setText("");
+//        loginOrLogoutButton.setText(R.string.profile_login_button_label);
     }
 }
