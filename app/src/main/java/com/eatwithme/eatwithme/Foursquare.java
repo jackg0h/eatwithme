@@ -12,24 +12,28 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by ezekielchow on 6/13/15.
  */
-public final class Foursquare extends Activity{
+public final class Foursquare extends Activity {
 
-    private static String dataToReturn = "";
+    private static ArrayList<String> dataToReturn = new ArrayList<String>();
     private static String FoursquareLog = "";
     private static String basicUrl = "https://api.foursquare.com/v2/";
     private static double searchRadius = 5000;
 
-    private Foursquare(){}
+    private Foursquare() {
+    }
 
-    public static String searchFoursquareVenue(double latitude, double longitude, String query, Context context)
+    public static ArrayList<String> searchFoursquareVenue(double latitude, double longitude, String query, Context context)
     {
-
-        
         // Instantiate the RequestQueue.
         String queryUrl = query;
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -43,10 +47,25 @@ public final class Foursquare extends Activity{
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        dataToReturn = response;
-                        Log.d(FoursquareLog, response);
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject reponseJson = jsonObject.getJSONObject("reponse");
+                            JSONArray arrayVenues = reponseJson.getJSONArray("venues");
 
+                            if (arrayVenues != null) {
+                                int len = arrayVenues.length();
+                                for (int i=0;i<len;i++){
+                                    dataToReturn.add(arrayVenues.get(i).toString());
+                                }
+                            }
 
+                            Log.d(FoursquareLog, arrayVenues.toString());
+                            dataToReturn.add(arrayVenues);
+
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -60,4 +79,8 @@ public final class Foursquare extends Activity{
         return dataToReturn;
     }
 
+    public static
+    {
+
+    }
 }

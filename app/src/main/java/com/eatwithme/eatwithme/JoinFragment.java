@@ -25,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -84,8 +85,8 @@ public class JoinFragment extends android.support.v4.app.Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        String foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
-        Log.d(JoingFragmentLog, foursquareVenue);
+        ArrayList<String> foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
+        Log.d(JoingFragmentLog, foursquareVenue.toString());
     }
 
     @Override
