@@ -99,8 +99,9 @@ public class MainActivity extends Activity {
         }
 
          else {
-
-            showProfileLoggedOut();
+            ParseLoginBuilder loginBuilder = new ParseLoginBuilder(MainActivity.this);
+            startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+            //showProfileLoggedOut();
         }
     }
 
