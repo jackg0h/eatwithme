@@ -18,4 +18,12 @@
         android:text="@string/com_parse_ui_twitter_login_button_label"
         android:visibility="gone" />
 </merge>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/res/layout/com_parse_ui_parse_login_third_party_section.xml --><!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_third_party_section.xml -->
+=======
+<<<<<<< HEAD
+<!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_third_party_section.xml --><!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_third_party_section.xml -->
+=======
+<!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/res/layout/com_parse_ui_parse_login_third_party_section.xml --><!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_third_party_section.xml -->
+>>>>>>> d7ab91c3de7b6b7d64afd9b0877f26909d80b630
+>>>>>>> 9d1b0545f40886ac589cfa43244cf399c43e93d5

@@ -7,7 +7,11 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/eatwithme.iml" filepath="$PROJECT_DIR$/eatwithme.iml" />
       <module fileurl="file://$PROJECT_DIR$/eatwithme.iml" filepath="$PROJECT_DIR$/eatwithme.iml" />
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/eatwithme.iml" filepath="$PROJECT_DIR$/eatwithme.iml" />
+=======
       <module fileurl="file://$PROJECT_DIR$/eatwithme-android.iml" filepath="$PROJECT_DIR$/eatwithme-android.iml" />
+>>>>>>> d7ab91c3de7b6b7d64afd9b0877f26909d80b630
     </modules>
   </component>
 </project>
