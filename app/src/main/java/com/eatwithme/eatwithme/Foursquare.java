@@ -10,6 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,8 +65,6 @@ public final class Foursquare extends Activity{
                                         formatted_address = formatted_address + formatted_address_array.getString(j);
                                 }
                                 JSONArray jCategories = jVenue.getJSONArray("categories");
-                                for(int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++)
-                                    EventBus.getDefault().post();
                                 MySingleton.getInstance(context).getmArrayList().add(new RowItem(venue_name, formatted_address, venue_id));
                             }
                             EventBus.getDefault().postSticky(MySingleton.getInstance(context).getmArrayList());
@@ -84,6 +84,14 @@ public final class Foursquare extends Activity{
         queue.add(stringRequest);
 
         return dataToReturn;
+    }
+    public static void createGroupRequest(int number_of_people, String group_name, String venue_id) {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseObject createGroup = new ParseObject("Group");
+        createGroup.put("max_party", number_of_people);
+        createGroup.put("name", group_name);
+        createGroup.put("group_admin", user.getObjectId());
+        createGroup.saveInBackground();
     }
 
 }
