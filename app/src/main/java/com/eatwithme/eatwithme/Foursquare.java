@@ -99,7 +99,8 @@ public final class Foursquare extends Activity{
                 @Override
                 public void onResponse(String response) {
                     try {
-                        int resolution = 150;
+                        int resolution_x = 335;
+                        int resolution_y = 211;
                         JSONObject jobj = new JSONObject(response);
                         JSONObject jResponse = jobj.getJSONObject("response");
                         JSONObject jVenue = jResponse.getJSONObject("venue");
@@ -111,7 +112,7 @@ public final class Foursquare extends Activity{
                             JSONArray items = jPhotosGroups.getJSONObject(0).getJSONArray("items");
                             String prefix =  items.getJSONObject(0).getString("prefix");
                             String suffix = items.getJSONObject(0).getString("suffix");
-                            String image_url = prefix + resolution + "x" + resolution + suffix;
+                            String image_url = prefix + resolution_x + "x" + resolution_y + suffix;
                             Log.d("IMAGE URL", image_url);
                             MySingleton.getInstance(context).getmArrayList().get(finalI).mImageLink = image_url;
                             makeImageRequest(finalI,context);

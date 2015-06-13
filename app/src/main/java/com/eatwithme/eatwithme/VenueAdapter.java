@@ -2,6 +2,7 @@ package com.eatwithme.eatwithme;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +54,9 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
         holder.txtTitle.setText(rowItem.mVenue);
         holder.txtAddress.setText(rowItem.mAddress);
         if(rowItem.mImage != null) {
-            holder.imageView.setImageBitmap(rowItem.mImage);
+            holder.imageView.setBackgroundDrawable(new BitmapDrawable(context.getResources(), rowItem.mImage));
         }else {
-            holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.group_placeholder));
+            holder.imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.group_placeholder));
         }
         return convertView;
     }
