@@ -1,57 +1,103 @@
-/**
- * Created by Jack on 6/13/2015.
- */
 package com.eatwithme.eatwithme;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class UpdateProfileActivity extends Activity{
+public class MeFragment extends android.support.v4.app.Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    VenueAdapter mAdapter;
+    ArrayList<RowItem> todoItems;
+    TextView userNameView;
+    Button fbLoginButton;
+
     private ProfilePictureView userProfilePictureView;
-    private TextView userNameView;
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+
+    // TODO: Rename and change types and number of parameters
+    public static MeFragment newInstance() {
+        MeFragment fragment = new MeFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public MeFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
 
-        setContentView(R.layout.activity_updateprofile);
+    }
 
-        userProfilePictureView = (ProfilePictureView) findViewById(R.id.profilePicture);
-        userNameView = (TextView) findViewById(R.id.userName);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_me, container, false);
+//        Button addArrayButton = (Button) rootView.findViewById(R.id.array_add_button);
+        userProfilePictureView = (ProfilePictureView) v.findViewById(R.id.profilePicture);
+        userNameView = (TextView) v.findViewById(R.id.userName);
+        fbLoginButton = (Button) v.findViewById(R.id.fb_login_button);
 
+        fbLoginButton.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View view) {
+                logout();
+            }
+        });
 
-        //Fetch Facebook user info if it is logged
         ParseUser currentUser = ParseUser.getCurrentUser();
         if ((currentUser != null) && currentUser.isAuthenticated()) {
             makeMeRequest();
         }
+
+        return v;
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().registerSticky(this);
+    }
+
+    @Override
+    public void onStop() {
+        //EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+    @Override
     public void onResume() {
         super.onResume();
-
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             // Check if the user is currently logged
@@ -60,9 +106,10 @@ public class UpdateProfileActivity extends Activity{
         } else {
             // If the user is not logged in, go to the
             // activity showing the login view.
-            startLoginActivity();
+            // startLoginActivity();
         }
     }
+
 
     private void makeMeRequest() {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
@@ -109,8 +156,6 @@ public class UpdateProfileActivity extends Activity{
 
     private void updateViewsWithProfileInfo() {
 
-
-
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser.has("profile")) {
             JSONObject userProfile = currentUser.getJSONObject("profile");
@@ -124,7 +169,8 @@ public class UpdateProfileActivity extends Activity{
                 }
 
                 if (userProfile.has("name")) {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                    //to get first time login
+                   /* ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
                     query.whereEqualTo("name", "Jack Goh");
                     query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -140,9 +186,9 @@ public class UpdateProfileActivity extends Activity{
                                 Log.d("score", "Error: " + e.getMessage());
                             }
                         }
-                    });
+                    });*/
 
-                    // userNameView.setText(userProfile.getString("name"));
+                    userNameView.setText(userProfile.getString("name"));
 
                 } else {
                     userNameView.setText("");
@@ -155,22 +201,12 @@ public class UpdateProfileActivity extends Activity{
         }
     }
 
-    public void onLogoutClick(View v) {
-        logout();
-    }
-
     private void logout() {
         // Log the user out
         ParseUser.logOut();
-
         // Go to the login view
-        startLoginActivity();
-    }
-
-    private void startLoginActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(getActivity(), SplashScreen.class);
         startActivity(intent);
+        //startLoginActivity();
     }
 }

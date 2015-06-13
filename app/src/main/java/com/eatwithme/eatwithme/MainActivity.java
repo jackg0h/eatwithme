@@ -21,28 +21,45 @@
 
 package com.eatwithme.eatwithme;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
-/**
- * Shows the user profile. This simple activity can function regardless of whether the user
- * is currently logged in.
- */
-public class MainActivity extends Activity {
+import java.util.Locale;
+
+
+public class MainActivity extends AppCompatActivity {
     private static final int LOGIN_REQUEST = 0;
 
     private TextView titleTextView;
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
+    private FloatingActionButton floatingActionButton;
+    private EditText groupSearchEditText;
+
+
+    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
 
     private ParseUser currentUser;
 
@@ -50,42 +67,58 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        titleTextView = (TextView) findViewById(R.id.profile_title);
-        emailTextView = (TextView) findViewById(R.id.profile_email);
-        nameTextView = (TextView) findViewById(R.id.profile_name);
-        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
-        titleTextView.setText(R.string.profile_title_logged_in);
 
-        loginOrLogoutButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentUser != null) {
-                    // User clicked to log out.
-                    ParseUser.logOut();
-                    currentUser = null;
-                    showProfileLoggedOut();
-                } else {
-                    // User clicked to log in.
-                    ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
-                            MainActivity.this);
-                    startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-       currentUser = ParseUser.getCurrentUser();
+        currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            //setContentView(R.layout.activity_home);
-            Intent intent = new Intent(this, UpdateProfileActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            setContentView(R.layout.activity_main);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            groupSearchEditText = (EditText) findViewById(R.id.group_name_edit_text);
+
+            // Bind the tabs to the ViewPager
+            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            tabs.setViewPager(mViewPager);
+
+//            groupSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                    if (actionId == EditorInfo.IME_NULL
+//                            && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+//                        Log.d("KEYDOWN", "KEYDOWN");
+//                        Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+//                    }
+//                    return true;
+//                }
+//            });
+
+
+            floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("BUTTON CLICKED", "BUTTON CLICKED");
+                    if(mViewPager.getCurrentItem() == 1) {
+                        if(groupSearchEditText.getVisibility() == View.GONE) {
+                            groupSearchEditText.setVisibility(View.VISIBLE);
+                            groupSearchEditText.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(groupSearchEditText, InputMethodManager.SHOW_IMPLICIT);
+                        }
+                        else {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(groupSearchEditText.getWindowToken(), 0);
+                            Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+                            groupSearchEditText.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            });
+
+
         } else {
             showProfileLoggedOut();
         }
@@ -95,29 +128,95 @@ public class MainActivity extends Activity {
                     MainActivity.this);
             startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
         }
+
+
+//        setContentView(R.layout.activity_main);
+//        titleTextView = (TextView) findViewById(R.id.profile_titl//e);
+//        emailTextView = (TextView) findViewById(R.id.profile_emai//l);
+//        nameTextView = (TextView) findViewById(R.id.profile_nam//e);
+//        loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
+
+
+//        titleTextView.setText(R.string.profile_title_logged_in);
+
+//        loginOrLogoutButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (currentUser != null) {
+//                    // User clicked to log out.
+//                    ParseUser.logOut();
+//                    currentUser = null;
+//                    showProfileLoggedOut();
+//                } else {
+//                    // User clicked to log in.
+//                    ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
+//                            MainActivity.this);
+//                    startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+//                }
+//            }
+//        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     /**
      * Shows the profile of the given user.
      */
-    private void showProfileLoggedIn() {
-        titleTextView.setText(R.string.profile_title_logged_in);
-        emailTextView.setText(currentUser.getEmail());
-        String fullName = currentUser.getString("name");
-        if (fullName != null) {
-            nameTextView.setText(fullName);
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
-        loginOrLogoutButton.setText(R.string.profile_logout_button_label);
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    return JoinFragment.newInstance("Join Fragment", "First Fragment");
+                case 1:
+                    return InviteFragment.newInstance();
+                default:
+                    return MeFragment.newInstance();
+            }
+
+
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+                case 2:
+                    return getString(R.string.title_section3).toUpperCase(l);
+            }
+            return null;
+        }
+//        loginOrLogoutButton.setText(R.string.profile_logout_button_label);
     }
 
     /**
      * Show a message asking the user to log in, toggle login/logout button text.
      */
     private void showProfileLoggedOut() {
-        titleTextView.setText(R.string.profile_title_logged_out);
-        emailTextView.setText("");
-        nameTextView.setText("");
-        loginOrLogoutButton.setText(R.string.profile_login_button_label);
+//        titleTextView.setText(R.string.profile_title_logged_out);
+//        emailTextView.setText("");
+//        nameTextView.setText("");
+//        loginOrLogoutButton.setText(R.string.profile_login_button_label);
     }
-
 }

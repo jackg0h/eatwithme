@@ -23,15 +23,17 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+
     <string name="login_intro">Login</string>
+
+
+    <string name="title_section1">Join</string>
+    <string name="title_section2">Invite</string>
+    <string name="title_section3">Me</string>
 
     <string name="FoursquareClientID">YLKPCQ2G2EEMMZLM32INGH5ZFAKFAXWGQ4PG51XTCJ0WMB3R</string>
     <string name="FoursquareSecretID">RLILGI3XA5OP5ZPTHXTUOHQJFXNOD4VSRVC01WY1JFTIRKWR</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment, me</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
 </resources>
