@@ -82,6 +82,29 @@ public class MainActivity extends AppCompatActivity {
             PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
             tabs.setViewPager(mViewPager);
 
+            tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+                @Override
+                public void onPageSelected(int position) {
+                    switch (position) {
+                        case 2:
+                            floatingActionButton.setVisibility(View.INVISIBLE);
+                            break;
+                        default:
+                            floatingActionButton.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
 //            groupSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //                @Override
 //                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -238,8 +261,9 @@ public class MainActivity extends AppCompatActivity {
                     return MeFragment.newInstance();
             }
 
-
         }
+
+
 
         @Override
         public int getCount() {

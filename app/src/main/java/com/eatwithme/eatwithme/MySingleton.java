@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MySingleton {
     private static MySingleton mInstance;
     private ArrayList<RowItem> mArrayList;
+    public ArrayList<RowItem> mJoinArrayList;
     MySingleton(Context context) {
         mArrayList = getmArrayList();
     }
@@ -24,5 +25,11 @@ public class MySingleton {
             mArrayList = new ArrayList<RowItem>();
         }
         return mArrayList;
+    }
+    public ArrayList<RowItem> getmJoinRowArrayList() {
+        if(mJoinArrayList == null) {
+            mJoinArrayList = new ArrayList<RowItem>();
+        }
+        return mJoinArrayList;
     }
 }

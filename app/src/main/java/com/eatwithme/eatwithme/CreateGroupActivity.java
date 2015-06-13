@@ -73,6 +73,11 @@ public class CreateGroupActivity extends ActionBarActivity {
             ArrayList<String> groupMembers = new ArrayList<String>();
             Intent intent = this.getIntent();
             String theVenue = intent.getStringExtra("venue_id");
+            String venueName = intent.getStringExtra("venue_name");
+            String venueAddress = intent.getStringExtra("venue_address");
+            Double  latitude = Double.valueOf(intent.getStringExtra("latitude"));
+            Double  longitude = Double.valueOf(intent.getStringExtra("longitude"));
+
 
             Log.d("Crash HERE", "First PArt");
 
@@ -81,14 +86,20 @@ public class CreateGroupActivity extends ActionBarActivity {
 
             Log.d("Crash HERE", "Second PArt");
 
+            Log.d("DEBUG", "LATITUDE IS " + latitude + " AND LONGITUDE IS " + longitude);
+
             ParseObject foodGroup = new ParseObject("FoodGroup");
-            foodGroup.put("GroupLocation", new ParseGeoPoint(3.0666075,101.6116721));
+            foodGroup.put("GroupLocation", new ParseGeoPoint(latitude,longitude));
             foodGroup.put("GroupAdmin", ParseUser.getCurrentUser().toString());
             foodGroup.put("GroupMaxParty", groupMaxParty);
             foodGroup.put("GroupName", groupNameString);
             foodGroup.put("GroupMembers", groupMembers);
             foodGroup.put("GroupVenueID", theVenue);
+            foodGroup.put("GroupVenueName", venueName);
+            foodGroup.put("GroupVenueAddress", venueAddress);
+
             foodGroup.saveInBackground();
+            finish();
 
 
 //            ParseObject foodGroup = new ParseObject("test");

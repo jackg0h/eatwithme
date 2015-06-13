@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\Users\Jack\Documents\Android\eatwithme\ParseLoginUI\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\Jack\Documents\Android\eatwithme\ParseLoginUI\src\debug\assets"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="/Users/Hii/Projects/eatwithme/ParseLoginUI/src/main/assets"/></dataSet><dataSet config="debug"><source path="/Users/Hii/Projects/eatwithme/ParseLoginUI/src/debug/assets"/></dataSet></merger>
+>>>>>>> 3d01184471c32219f0a94e6d6a2f5843154d7322

@@ -33,4 +33,8 @@
                  android:indeterminateOnly="true"
         />
 </RelativeLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/com_facebook_login_fragment.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/com_facebook_login_fragment.xml -->
+=======
+<!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/com_facebook_login_fragment.xml --><!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/com_facebook_login_fragment.xml -->
+>>>>>>> 3d01184471c32219f0a94e6d6a2f5843154d7322
