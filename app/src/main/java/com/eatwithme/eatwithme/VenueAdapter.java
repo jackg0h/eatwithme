@@ -2,6 +2,7 @@ package com.eatwithme.eatwithme;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
         ImageView imageView;
         TextView txtAddress;
         TextView txtTitle;
+
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -45,12 +47,17 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
             holder.txtTitle = (TextView) convertView.findViewById(R.id.venue);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
-        } else
+        } else {
             holder = (ViewHolder) convertView.getTag();
+        }
 
         holder.txtTitle.setText(rowItem.mVenue);
         holder.txtAddress.setText(rowItem.mAddress);
-        holder.imageView.setImageBitmap(rowItem.mImage);
+        if(rowItem.mImage != null) {
+            holder.imageView.setBackgroundDrawable(new BitmapDrawable(context.getResources(), rowItem.mImage));
+        }else {
+            holder.imageView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.group_placeholder));
+        }
         return convertView;
     }
 }

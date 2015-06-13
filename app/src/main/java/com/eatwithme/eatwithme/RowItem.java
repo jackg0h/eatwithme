@@ -1,15 +1,18 @@
 package com.eatwithme.eatwithme;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 
 /**
  * Created by Hii on 6/13/15.
  */
-public class RowItem {
+public class RowItem extends Activity{
     public String mVenue;
     public String mVenueID;
     public String mAddress;
+    public String mImageLink;
     public Bitmap mImage;
+
     RowItem(String venue, String address, String venue_id) {
         mVenue = venue;
         mAddress = address;
@@ -19,4 +22,5 @@ public class RowItem {
         mVenue = title;
         mImage = image;
     }
+
 }
