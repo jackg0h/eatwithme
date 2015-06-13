@@ -25,8 +25,4 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
     />
-<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/com_facebook_activity_layout.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/com_facebook_activity_layout.xml -->
-=======
-<!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/com_facebook_activity_layout.xml --><!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/com_facebook_activity_layout.xml -->
->>>>>>> 3d08829397fe7d07654cebf96e078ebc70d9b114

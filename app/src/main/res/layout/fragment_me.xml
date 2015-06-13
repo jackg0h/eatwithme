@@ -57,28 +57,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="245dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="2">
 
         <Button
             android:id="@+id/saveBtn"
-            android:layout_width="185dp"
+            android:layout_width="0dp"
             android:layout_height="82dp"
-            android:layout_marginTop="100dp"
             android:background="#ff5a5f"
             android:textStyle="bold"
             android:text="SAVE"
-            android:layout_weight="0.45"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@android:color/background_light"
+            android:layout_marginTop="165dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/fb_login_button"
-            android:layout_width="185dp"
+            android:layout_width="0dp"
             android:layout_height="82dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="165dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
 
             android:text="@string/com_facebook_loginview_log_out_button"
             android:textColor="@color/com_facebook_share_button_text_color"

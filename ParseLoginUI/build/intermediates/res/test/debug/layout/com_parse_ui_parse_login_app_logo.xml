@@ -5,8 +5,4 @@
     android:layout_height="wrap_content"
     android:src="@drawable/com_parse_ui_app_logo"
     android:contentDescription="@string/com_parse_ui_logo_content_description" />
-<<<<<<< HEAD
 <!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_app_logo.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_app_logo.xml -->
-=======
-<!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/res/layout/com_parse_ui_parse_login_app_logo.xml --><!-- From: file:/Users/ezekielchow/Projects/eatwithme-android/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_app_logo.xml -->
->>>>>>> 3d08829397fe7d07654cebf96e078ebc70d9b114

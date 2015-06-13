@@ -1,8 +1,8 @@
 package com.eatwithme.eatwithme;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,15 +12,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -101,7 +96,7 @@ public class CreateGroupActivity extends ActionBarActivity {
 //            foodGroup.put("meme", "asdasdasdasd");
 //            foodGroup.put("theArray", groupMembers);
 //            foodGroup.saveInBackground();
-
+            Toast.makeText(CreateGroupActivity.this, "SAVED!", Toast.LENGTH_SHORT).show();
             Log.d("Crash HERE", "third PArt");
 
         }
