@@ -52,7 +52,11 @@ public class VenueAdapter extends ArrayAdapter<RowItem> {
 
         holder.txtTitle.setText(rowItem.mVenue);
         holder.txtAddress.setText(rowItem.mAddress);
-        holder.imageView.setImageBitmap(rowItem.mImage);
+        if(rowItem.mImage != null) {
+            holder.imageView.setImageBitmap(rowItem.mImage);
+        }else {
+            holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.group_placeholder));
+        }
         return convertView;
     }
 }
