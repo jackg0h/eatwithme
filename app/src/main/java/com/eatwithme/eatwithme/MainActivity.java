@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return InviteFragment.newInstance();
                 default:
-                    return PlaceholderFragment.newInstance();
+                    return MeFragment.newInstance();
             }
 
 
