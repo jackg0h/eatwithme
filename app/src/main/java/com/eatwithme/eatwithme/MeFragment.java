@@ -113,12 +113,14 @@ public class MeFragment extends android.support.v4.app.Fragment {
                     if (scoreList.size() >= 1) {
                         for (int i = 0; i < scoreList.size(); i++) {
                             String party_max = (String) scoreList.get(i).get("GroupMaxParty");
-//                            Array group_members = (Array) scoreList.get(i).get("GroupMembers");
+                            ArrayList group_members = (ArrayList) scoreList.get(i).get("GroupMembers");
                             String group_name = (String) scoreList.get(i).get("GroupName");
                             String venue_id = (String) scoreList.get(i).get("GroupVenueID");
-                            String venue_name = (String) scoreList.get(i).get("GroupVenueName");
+                            String venue_name = (String ) scoreList.get(i).get("GroupVenueName");
                             String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
-                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name, true));
+                            String objectID      = (String) scoreList.get(i).getObjectId();
+                            Log.d("OBJECT ID","\n\n\n\n\n" +  (String) scoreList.get(i).getObjectId() + "\n\n\n\n");
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_members, group_name, objectID));
                         }
                         mAdapter.notifyDataSetChanged();
                     }

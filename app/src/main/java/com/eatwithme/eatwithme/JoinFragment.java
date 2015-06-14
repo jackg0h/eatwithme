@@ -1,12 +1,14 @@
 package com.eatwithme.eatwithme;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -14,6 +16,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,24 +66,35 @@ public class JoinFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_join, container, false);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("FoodGroup");
-        ListView mListView = (ListView) rootView.findViewById(R.id.join_listview);
+        final ListView mListView = (ListView) rootView.findViewById(R.id.join_listview);
         mAdapter = new VenueAdapter(getActivity(),
                 R.layout.list_item, MySingleton.getInstance(getActivity()).getmJoinRowArrayList());
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), JoinGroupActivity.class);
+                intent.putExtra("position", i);
+                startActivity(intent);
+            }
+        });
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> scoreList, ParseException e) {
                 if (e == null) {
                     Log.d("score", "Retrieved " + scoreList.size() + " scores");
 
                     if(scoreList.size()>=1){
+                        MySingleton.getInstance(getActivity()).getmJoinRowArrayList().clear();
                         for(int i = 0 ; i < scoreList.size(); i++) {
                             String party_max = (String) scoreList.get(i).get("GroupMaxParty");
-//                            Array group_members = (Array) scoreList.get(i).get("GroupMembers");
+                            ArrayList group_members = (ArrayList) scoreList.get(i).get("GroupMembers");
                             String group_name = (String) scoreList.get(i).get("GroupName");
                             String venue_id = (String) scoreList.get(i).get("GroupVenueID");
                             String venue_name = (String ) scoreList.get(i).get("GroupVenueName");
                             String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
-                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name, true));
+                            String objectID      = (String) scoreList.get(i).getObjectId();
+                            Log.d("OBJECT ID","\n\n\n\n\n" +  (String) scoreList.get(i).getObjectId() + "\n\n\n\n");
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_members, group_name, objectID));
                         }
                         mAdapter.notifyDataSetChanged();
                     }
