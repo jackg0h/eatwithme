@@ -29,4 +29,8 @@
     style="@style/MessengerButtonText.White.Small"
     />
 </FrameLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/messenger_button_send_white_small.xml --><!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/messenger_button_send_white_small.xml -->
+=======
+<!-- From: file:/Users/gokhanc/src/android-sdk/facebook/res/layout/messenger_button_send_white_small.xml --><!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/layout/messenger_button_send_white_small.xml -->
+>>>>>>> 006bb21f4c66e7e7fe1cfdf26a998a4d074a5dee

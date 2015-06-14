@@ -24,21 +24,19 @@ import de.greenrobot.event.EventBus;
  * Created by ezekielchow on 6/13/15.
  */
 public final class Foursquare extends Activity{
+    public static final String INVITE_TAG = "Invite_TAG";
 
-    private static String dataToReturn = "";
-    private static String FoursquareLog = "";
     private static String basicUrl = "https://api.foursquare.com/v2/";
     private static double searchRadius = 5000;
 
 
     private Foursquare(){}
 
-    public static String searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
+    public static void searchFoursquareVenue(double latitude, double longitude, String query, final Context context)
     {
 
         // Instantiate the RequestQueue.
         String queryUrl = query;
-        RequestQueue queue = Volley.newRequestQueue(context);
         String theCustomUrl = "venues/search?ll=" + latitude + "," + longitude + "&radius=" + searchRadius + "&query=" + queryUrl + "&v=20150613";
         String authTokenUrl = "&client_id=" + "YLKPCQ2G2EEMMZLM32INGH5ZFAKFAXWGQ4PG51XTCJ0WMB3R" + "&client_secret=" + "RLILGI3XA5OP5ZPTHXTUOHQJFXNOD4VSRVC01WY1JFTIRKWR";
         String requestUrl = basicUrl + theCustomUrl + authTokenUrl;
@@ -84,76 +82,83 @@ public final class Foursquare extends Activity{
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(FoursquareLog, error.toString());
             }
         });
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-        return dataToReturn;
+        stringRequest.setTag(INVITE_TAG);
+        MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
     }
     public static void fillInImageLinks(final Context context) {
-        for (int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++) {
-            String venue_id = MySingleton.getInstance(context).getmArrayList().get(i).mVenueID;
-            String url = "https://api.foursquare.com/v2/venues/" + venue_id + "?" + "oauth_token=" + "2J1RKF3B5YTS1D1TLGZZWUN4HJ1L2IPGOUVIE440MQXN5YSI" + "&v=20150614";
-            final int finalI = i;
-            RequestQueue queue = Volley.newRequestQueue(context);
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        int resolution_x = 335;
-                        int resolution_y = 211;
-                        JSONObject jobj = new JSONObject(response);
-                        JSONObject jResponse = jobj.getJSONObject("response");
-                        JSONObject jVenue = jResponse.getJSONObject("venue");
-
-
+        try {
+            for (int i = 0; i < MySingleton.getInstance(context).getmArrayList().size(); i++) {
+                String venue_id = MySingleton.getInstance(context).getmArrayList().get(i).mVenueID;
+                String url = "https://api.foursquare.com/v2/venues/" + venue_id + "?" + "oauth_token=" + "2J1RKF3B5YTS1D1TLGZZWUN4HJ1L2IPGOUVIE440MQXN5YSI" + "&v=20150614";
+                final int finalI = i;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
                         try {
-                            JSONObject jPhotos = jVenue.getJSONObject("photos");
-                            JSONArray jPhotosGroups = jPhotos.getJSONArray("groups");
-                            JSONArray items = jPhotosGroups.getJSONObject(0).getJSONArray("items");
-                            String prefix =  items.getJSONObject(0).getString("prefix");
-                            String suffix = items.getJSONObject(0).getString("suffix");
-                            String image_url = prefix + resolution_x + "x" + resolution_y + suffix;
-                            Log.d("IMAGE URL", image_url);
-                            MySingleton.getInstance(context).getmArrayList().get(finalI).mImageLink = image_url;
-                            makeImageRequest(finalI,context);
-                        }catch(JSONException e) {
-                            Log.e("NO IMAGES FOUND", "NO IMAGES FOUND");
-                        }
+                            int resolution_x = 335;
+                            int resolution_y = 211;
+                            JSONObject jobj = new JSONObject(response);
+                            JSONObject jResponse = jobj.getJSONObject("response");
+                            JSONObject jVenue = jResponse.getJSONObject("venue");
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            try {
+                                JSONObject jPhotos = jVenue.getJSONObject("photos");
+                                JSONArray jPhotosGroups = jPhotos.getJSONArray("groups");
+                                JSONArray items = jPhotosGroups.getJSONObject(0).getJSONArray("items");
+                                String prefix = items.getJSONObject(0).getString("prefix");
+                                String suffix = items.getJSONObject(0).getString("suffix");
+                                String image_url = prefix + resolution_x + "x" + resolution_y + suffix;
+                                Log.d("IMAGE URL", image_url);
+                                MySingleton.getInstance(context).getmArrayList().get(finalI).mImageLink = image_url;
+                                makeImageRequest(finalI, context);
+                            } catch (Exception e) {
+                                Log.e("NO IMAGES FOUND", "NO IMAGES FOUND");
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(FoursquareLog, error.toString());
-                }
-            });
-            queue.add(stringRequest);
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+                stringRequest.setTag(INVITE_TAG);
+                MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
+            }
+        }catch(java.lang.IndexOutOfBoundsException e) {
+            Log.e("WTF", "WTF");
+        }catch(Exception e) {
+            Log.e("WOW", "WTF");
         }
     }
     public static void makeImageRequest(final int position, final Context context) {
-        String url = MySingleton.getInstance(context).getmArrayList().get(position).mImageLink;
-        RequestQueue queue = Volley.newRequestQueue(context);
-        ImageRequest request = new ImageRequest(url,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        Log.d("IMAGAE REQUEST", "DONE");
-                        MySingleton.getInstance(context).getmArrayList().get(position).mImage = bitmap;
-                        EventBus.getDefault().postSticky(5);
-                    }
-                }, 0, 0, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("WTF", "WTF THIS SHOUDLNT BE HAPPENING");
-                    }
-                });
-        queue.add(request);
+        try {
+            String url = MySingleton.getInstance(context).getmArrayList().get(position).mImageLink;
+            RequestQueue queue = Volley.newRequestQueue(context);
+            ImageRequest request = new ImageRequest(url,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            Log.d("IMAGAE REQUEST", "DONE");
+                            MySingleton.getInstance(context).getmArrayList().get(position).mImage = bitmap;
+                            EventBus.getDefault().postSticky(5);
+                        }
+                    }, 0, 0, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("WTF", "WTF THIS SHOUDLNT BE HAPPENING");
+                        }
+                    });
+            request.setTag(INVITE_TAG);
+            MySingleton.getInstance(context).getRequestQueue().add(request);
+        }catch(Exception e) {
+            Log.e("HUH", "WHAT");
+        }
     }
     public static void createGroupRequest(int number_of_people, String group_name, String venue_id) {
         ParseUser user = ParseUser.getCurrentUser();

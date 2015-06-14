@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="211dp"
+            android:src="@drawable/gradient"
+            android:background="@drawable/group_placeholder"
+            android:id="@+id/icon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/group_name_textview"
+            android:textSize="20dp"
+            android:textColor="#FFF"
+            android:text="PLACEHOLDER GROUP NAME"
+            android:layout_alignBottom="@+id/icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="54dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_textview"
+        android:text="TITLE"
+        android:fontFamily="sans_serif"
+        android:textSize="20dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:textColor="#FFF"
+        android:background="#ff5a5f"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_textview"
+        android:text="DESCRIPTION"
+        android:fontFamily="sans-serif-light"
+        android:textSize="14dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:id="@+id/join_group_button"
+        android:layout_gravity="center_horizontal"
+        android:text="Join"/>
+</LinearLayout>

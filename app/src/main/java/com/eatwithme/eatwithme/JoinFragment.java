@@ -1,37 +1,23 @@
 package com.eatwithme.eatwithme;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.eatwithme.eatwithme.Foursquare;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,21 +40,11 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     private String JoingFragmentLog = "";
 
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment JoinFragment.
-     */
+    private VenueAdapter mAdapter;
     // TODO: Rename and change types and number of parameters
-    public static JoinFragment newInstance(String param1, String param2) {
+    public static JoinFragment newInstance() {
         JoinFragment fragment = new JoinFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,19 +57,54 @@ public class JoinFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        String foursquareVenue = Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", getActivity());
-        Log.d(JoingFragmentLog, foursquareVenue.toString());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_join, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_join, container, false);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FoodGroup");
+        final ListView mListView = (ListView) rootView.findViewById(R.id.join_listview);
+        mAdapter = new VenueAdapter(getActivity(),
+                R.layout.list_item, MySingleton.getInstance(getActivity()).getmJoinRowArrayList());
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), JoinGroupActivity.class);
+                intent.putExtra("position", i);
+                startActivity(intent);
+            }
+        });
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + scoreList.size() + " scores");
+
+                    if(scoreList.size()>=1){
+                        MySingleton.getInstance(getActivity()).getmJoinRowArrayList().clear();
+                        for(int i = 0 ; i < scoreList.size(); i++) {
+                            String party_max = (String) scoreList.get(i).get("GroupMaxParty");
+                            ArrayList group_members = (ArrayList) scoreList.get(i).get("GroupMembers");
+                            String group_name = (String) scoreList.get(i).get("GroupName");
+                            String venue_id = (String) scoreList.get(i).get("GroupVenueID");
+                            String venue_name = (String ) scoreList.get(i).get("GroupVenueName");
+                            String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
+                            String objectID      = (String) scoreList.get(i).getObjectId();
+                            Log.d("OBJECT ID","\n\n\n\n\n" +  (String) scoreList.get(i).getObjectId() + "\n\n\n\n");
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_members, group_name, objectID));
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+        return rootView;
 
 
     }
