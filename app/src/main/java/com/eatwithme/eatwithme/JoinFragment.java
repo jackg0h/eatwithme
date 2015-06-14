@@ -73,7 +73,7 @@ public class JoinFragment extends android.support.v4.app.Fragment {
                     Log.d("score", "Retrieved " + scoreList.size() + " scores");
 
                     if(scoreList.size()>=1){
-                        for(int i = 0 ; i < 1; i++) {
+                        for(int i = 0 ; i < scoreList.size(); i++) {
                             String party_max = (String) scoreList.get(i).get("GroupMaxParty");
 //                            Array group_members = (Array) scoreList.get(i).get("GroupMembers");
                             String group_name = (String) scoreList.get(i).get("GroupName");
