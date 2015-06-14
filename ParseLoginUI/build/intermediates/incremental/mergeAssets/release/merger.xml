@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\Users\Dayrl\Desktop\Git\ParseLoginUI\src\main\assets"/></dataSet><dataSet config="release"><source path="C:\Users\Dayrl\Desktop\Git\ParseLoginUI\src\release\assets"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="/Users/Hii/Projects/eatwithme/ParseLoginUI/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/Hii/Projects/eatwithme/ParseLoginUI/src/release/assets"/></dataSet></merger>
->>>>>>> 9d1b0545f40886ac589cfa43244cf399c43e93d5

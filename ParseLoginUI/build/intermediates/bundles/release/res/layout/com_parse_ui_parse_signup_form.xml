@@ -58,8 +58,4 @@
         android:text="@string/com_parse_ui_create_account_button_label" />
 
 </LinearLayout>
-<<<<<<< HEAD
 <!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/res/layout/com_parse_ui_parse_signup_form.xml -->
-=======
-<!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_signup_form.xml -->
->>>>>>> 9d1b0545f40886ac589cfa43244cf399c43e93d5

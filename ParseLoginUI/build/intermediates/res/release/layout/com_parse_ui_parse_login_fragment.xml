@@ -26,8 +26,4 @@
         <include layout="@layout/com_parse_ui_parse_login_third_party_section" />
     </LinearLayout>
 </LinearLayout>
-<<<<<<< HEAD
 <!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/res/layout/com_parse_ui_parse_login_fragment.xml -->
-=======
-<!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_fragment.xml -->
->>>>>>> 9d1b0545f40886ac589cfa43244cf399c43e93d5
