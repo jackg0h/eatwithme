@@ -26,13 +26,35 @@
 
         <TextView
             android:id="@+id/userName"
-            android:layout_width="194dp"
+            android:layout_width="81dp"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:textColor="#333"
             android:textSize="18sp"
-            android:text="test" />
+            android:text="test"
+            android:layout_weight="0.09" />
+
+        <Button
+            android:id="@+id/fb_login_button"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+
+            android:text="@string/com_facebook_loginview_log_out_button"
+            android:textColor="@color/com_facebook_share_button_text_color"
+            android:textSize="@dimen/com_facebook_share_button_text_size"
+            android:textStyle="bold"
+
+            android:background="@drawable/com_facebook_button_background"
+            android:drawableLeft="@drawable/com_facebook_button_icon"
+            android:drawablePadding="@dimen/com_facebook_share_button_compound_drawable_padding"
+            android:paddingLeft="@dimen/com_facebook_share_button_padding_left"
+            android:paddingTop="@dimen/com_facebook_share_button_padding_top"
+            android:paddingRight="@dimen/com_facebook_share_button_padding_right"
+            android:paddingBottom="@dimen/com_facebook_share_button_padding_bottom"
+            android:onClick="onLogoutClick"/>
     </LinearLayout>
 
     <LinearLayout
@@ -51,9 +73,25 @@
         <EditText
             android:id="@+id/intrest_text"
             android:layout_width="match_parent"
-            android:layout_height="76dp"
+            android:layout_height="wrap_content"
             android:hint="My Intrest"/>
     </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Joined Group"
+        android:id="@+id/textView2" />
+
+    <ListView
+        android:id="@+id/joined_listview"
+        android:layout_width="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:layout_height="346dp">
+    </ListView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,27 +113,7 @@
             android:layout_alignParentBottom="true"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/fb_login_button"
-            android:layout_width="0dp"
-            android:layout_height="82dp"
-            android:layout_marginTop="165dp"
-            android:layout_alignParentBottom="true"
-            android:layout_weight="1"
 
-            android:text="@string/com_facebook_loginview_log_out_button"
-            android:textColor="@color/com_facebook_share_button_text_color"
-            android:textSize="@dimen/com_facebook_share_button_text_size"
-            android:textStyle="bold"
-
-            android:background="@drawable/com_facebook_button_background"
-            android:drawableLeft="@drawable/com_facebook_button_icon"
-            android:drawablePadding="@dimen/com_facebook_share_button_compound_drawable_padding"
-            android:paddingLeft="@dimen/com_facebook_share_button_padding_left"
-            android:paddingTop="@dimen/com_facebook_share_button_padding_top"
-            android:paddingRight="@dimen/com_facebook_share_button_padding_right"
-            android:paddingBottom="@dimen/com_facebook_share_button_padding_bottom"
-            android:onClick="onLogoutClick"/>
 
 
     </LinearLayout>

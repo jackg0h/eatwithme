@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.ProfilePictureView;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -25,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MeFragment extends android.support.v4.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -79,6 +82,7 @@ public class MeFragment extends android.support.v4.app.Fragment {
         fbLoginButton = (Button) v.findViewById(R.id.fb_login_button);
         saveButton = (Button) v.findViewById(R.id.saveBtn);
         intrestText = (EditText) v.findViewById(R.id.intrest_text);
+        ListView mListView = (ListView) v.findViewById(R.id.joined_listview);
 
         //init intrest
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -92,6 +96,35 @@ public class MeFragment extends android.support.v4.app.Fragment {
                     Log.d("score", "The getFirst request failed.");
                 } else {
                    intrestText.setText(object.getString("interest"));
+                }
+            }
+        });
+
+        //listview
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("FoodGroup");
+        mAdapter = new VenueAdapter(getActivity(),
+                R.layout.list_item, MySingleton.getInstance(getActivity()).getmJoinRowArrayList());
+        mListView.setAdapter(mAdapter);
+        query2.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + scoreList.size() + " scores");
+
+                    if (scoreList.size() >= 1) {
+                        for (int i = 0; i < scoreList.size(); i++) {
+                            String party_max = (String) scoreList.get(i).get("GroupMaxParty");
+//                            Array group_members = (Array) scoreList.get(i).get("GroupMembers");
+                            String group_name = (String) scoreList.get(i).get("GroupName");
+                            String venue_id = (String) scoreList.get(i).get("GroupVenueID");
+                            String venue_name = (String) scoreList.get(i).get("GroupVenueName");
+                            String venue_address = (String) scoreList.get(i).get("GroupVenueAddress");
+                            MySingleton.getInstance(getActivity()).getmJoinRowArrayList().add(new RowItem(venue_name, venue_address, venue_id, party_max, group_name, true));
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
                 }
             }
         });
