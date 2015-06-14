@@ -52,4 +52,5 @@
         <item>03</item>
         <item>04</item>
     </string-array>
+    <string name="title_activity_join_group">JoinGroupActivity</string>
 </resources>
