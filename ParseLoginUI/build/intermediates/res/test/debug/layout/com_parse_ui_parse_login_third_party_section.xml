@@ -18,4 +18,8 @@
         android:text="@string/com_parse_ui_twitter_login_button_label"
         android:visibility="gone" />
 </merge>
+<<<<<<< HEAD
+<!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_third_party_section.xml --><!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_third_party_section.xml -->
+=======
 <!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_login_third_party_section.xml --><!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_third_party_section.xml -->
+>>>>>>> 3d01184471c32219f0a94e6d6a2f5843154d7322

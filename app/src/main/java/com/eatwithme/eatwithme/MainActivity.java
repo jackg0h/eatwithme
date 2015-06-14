@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             groupSearchEditText = (EditText) findViewById(R.id.group_name_edit_text);
 
+            Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, "food", this);
+
             // Bind the tabs to the ViewPager
             PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
             tabs.setViewPager(mViewPager);
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
                     MainActivity.this);
             startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+            updateUI();
         }
 
 
@@ -180,11 +183,63 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
+    private void updateUI(){
+        setContentView(R.layout.activity_main);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        groupSearchEditText = (EditText) findViewById(R.id.group_name_edit_text);
+
+        // Bind the tabs to the ViewPager
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setViewPager(mViewPager);
+
+//            groupSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                    if (actionId == EditorInfo.IME_NULL
+//                            && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+//                        Log.d("KEYDOWN", "KEYDOWN");
+//                        Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+//                    }
+//                    return true;
+//                }
+//            });
+
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("BUTTON CLICKED", "BUTTON CLICKED");
+                if(mViewPager.getCurrentItem() == 1) {
+                    if(groupSearchEditText.getVisibility() == View.GONE) {
+                        groupSearchEditText.setVisibility(View.VISIBLE);
+                        groupSearchEditText.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(groupSearchEditText, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                    else {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(groupSearchEditText.getWindowToken(), 0);
+                        Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
+                        groupSearchEditText.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
     }
+
 
     /**
      * Shows the profile of the given user.
@@ -201,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return JoinFragment.newInstance("Join Fragment", "First Fragment");
+                    return JoinFragment.newInstance();
                 case 1:
                     return InviteFragment.newInstance();
                 default:

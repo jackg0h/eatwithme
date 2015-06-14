@@ -107,7 +107,7 @@ public class CreateGroupActivity extends ActionBarActivity {
 //            foodGroup.put("meme", "asdasdasdasd");
 //            foodGroup.put("theArray", groupMembers);
 //            foodGroup.saveInBackground();
-
+            Toast.makeText(CreateGroupActivity.this, "SAVED!", Toast.LENGTH_SHORT).show();
             Log.d("Crash HERE", "third PArt");
 
         }
