@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-el/values.xml -->
+<<<<<<< HEAD
+    <!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-el/values.xml -->
+=======
+    <!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-el/values.xml -->
+>>>>>>> 006bb21f4c66e7e7fe1cfdf26a998a4d074a5dee
     <eat-comment/>
     <string name="messenger_send_button_text">Αποστολή</string>
 </resources>

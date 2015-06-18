@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("BUTTON CLICKED", "BUTTON CLICKED");
                 if(mViewPager.getCurrentItem() == 1) {
                     if(groupSearchEditText.getVisibility() == View.GONE) {
+
                         groupSearchEditText.setVisibility(View.VISIBLE);
                         groupSearchEditText.requestFocus();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -225,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(groupSearchEditText.getWindowToken(), 0);
+                        MySingleton.getInstance(MainActivity.this).getRequestQueue().cancelAll(Foursquare.INVITE_TAG);
                         Foursquare.searchFoursquareVenue(3.0666075, 101.6116721, groupSearchEditText.getText().toString(), MainActivity.this);
                         groupSearchEditText.setVisibility(View.GONE);
                     }

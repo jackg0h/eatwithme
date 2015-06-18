@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <<<<<<< HEAD
+    <!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-he/values.xml -->
+=======
+<<<<<<< HEAD
     <!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-he/values.xml -->
 =======
     <!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/res/values-he/values.xml -->
 >>>>>>> 3d01184471c32219f0a94e6d6a2f5843154d7322
+>>>>>>> 006bb21f4c66e7e7fe1cfdf26a998a4d074a5dee
     <eat-comment/>
     <string name="com_facebook_image_download_unknown_error">שגיאה בעת הורדת תמונה</string>
     <string name="com_facebook_internet_permission_error_message">ההתחברות לתצוגת אתר דורשת אישור אינטרנט</string>

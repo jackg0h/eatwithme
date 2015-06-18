@@ -21,4 +21,8 @@
         android:layout_weight="0.5" />
 
 </LinearLayout>
-<!-- From: file:/C:/Users/Jack/Documents/Android/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_signup_fragment.xml -->
+<<<<<<< HEAD
+<!-- From: file:/C:/Users/Dayrl/Desktop/Git/ParseLoginUI/res/layout/com_parse_ui_parse_signup_fragment.xml -->
+=======
+<!-- From: file:/Users/Hii/Projects/eatwithme/ParseLoginUI/res/layout/com_parse_ui_parse_signup_fragment.xml -->
+>>>>>>> 006bb21f4c66e7e7fe1cfdf26a998a4d074a5dee

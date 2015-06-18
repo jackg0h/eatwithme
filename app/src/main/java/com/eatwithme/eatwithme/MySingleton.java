@@ -2,6 +2,9 @@ package com.eatwithme.eatwithme;
 
 import android.content.Context;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +14,8 @@ public class MySingleton {
     private static MySingleton mInstance;
     private ArrayList<RowItem> mArrayList;
     public ArrayList<RowItem> mJoinArrayList;
+    public static Context mContext;
+    private RequestQueue mRequestQueue;
     MySingleton(Context context) {
         mArrayList = getmArrayList();
     }
@@ -18,6 +23,7 @@ public class MySingleton {
         if (mInstance == null) {
             mInstance = new MySingleton(context);
         }
+        mContext = context;
         return mInstance;
     }
     public ArrayList<RowItem> getmArrayList(){
@@ -31,5 +37,11 @@ public class MySingleton {
             mJoinArrayList = new ArrayList<RowItem>();
         }
         return mJoinArrayList;
+    }
+    public RequestQueue getRequestQueue() {
+        if(mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+        }
+        return mRequestQueue;
     }
 }
