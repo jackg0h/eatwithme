@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -43,7 +44,8 @@ public class JoinGroupActivity extends ActionBarActivity {
                             // Now let's update it with some new data. In this case, only cheatMode and score
                             // will get sent to the Parse Cloud. playerName hasn't changed.
                             gameScore.add("GroupMembers", ParseUser.getCurrentUser().getObjectId());
-                            gameScore.saveInBackground();
+                            gameScore.saveInBackground();0
+                            Toast.makeText(JoinGroupActivity.this, "Joined", Toast.LENGTH_SHORT).show();
                         }
                         if (e != null) {
                             e.printStackTrace();
